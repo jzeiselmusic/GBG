@@ -71,6 +71,8 @@ private struct IconTabButton: View {
     var height: CGFloat
     var width: CGFloat
     let action: () -> Void
+    
+    @State private var isPressed = false
 
     var body: some View {
         Button(action: action) {
@@ -81,12 +83,19 @@ private struct IconTabButton: View {
                     width: width * 0.5,   // icon scales to 50% of button size
                     height: height * 0.5
                 )
-                .foregroundStyle(isSelected ? Color("NormalWhite") : Color("PrimaryGold"))
+                .foregroundStyle(isSelected ? Color("NormalWhite") : Color("SecondaryGold"))
                 .frame(width: width, height: height) // button hit area
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color("PrimaryGold") : Color("NormalWhite"))
-                        .opacity(0.6)
+                        .fill(isSelected ? Color("SecondaryGold") : Color("NormalWhite"))
+                        .opacity(0.7)
+                )
+                .scaleEffect(isPressed ? 0.9 : 1.0) // shrink when pressed
+                .animation(.spring(response: 0.15, dampingFraction: 0.7), value: isPressed)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in isPressed = true }
+                        .onEnded { _ in isPressed = false }
                 )
         }
         .buttonStyle(.plain)

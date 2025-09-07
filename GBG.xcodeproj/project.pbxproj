@@ -34,7 +34,8 @@
 		58B5201C2A4A4A2BA243D1D1 /* LedgerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerViewModel.swift; sourceTree = "<group>"; };
 		58B5201D2A4A4A2BA243D1D1 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerView.swift; sourceTree = "<group>"; };
-		58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+    58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+    58B5B01A2A4A4A2BA243D1D1 /* TransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
 		58B5401A2A4A4A2BA243D1D1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58B5601A2A4A4A2BA243D1D1 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 			58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -114,16 +115,18 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		58B5202D2A4A4A2BA243D1D1 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */,
-				58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */,
-				58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
+			58B5202D2A4A4A2BA243D1D1 /* Views */ = {
+				isa = PBXGroup;
+				children = (
+					58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */,
+            58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */,
+            58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */,
+            58B5B01A2A4A4A2BA243D1D1 /* TransferView.swift */,
+						58B5701B2A4A4A2BA243D1D1 /* UserContainerView.swift */,
+				);
+				path = Views;
+				sourceTree = "<group>";
+			};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -200,12 +203,13 @@
                 58B5200B2A4A4A2BA243D1D1 /* GlitterboxAPI.swift in Sources */,
                 58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */,
                 58B5200C2A4A4A2BA243D1D1 /* LedgerViewModel.swift in Sources */,
-				58B5200D2A4A4A2BA243D1D1 /* DashboardViewModel.swift in Sources */,
-				58B5200E2A4A4A2BA243D1D1 /* LedgerView.swift in Sources */,
-				58B5200F2A4A4A2BA243D1D1 /* DashboardView.swift in Sources */,
-				58B5600A2A4A4A2BA243D1D1 /* AuthViewModel.swift in Sources */,
-				58B5600B2A4A4A2BA243D1D1 /* SignInView.swift in Sources */,
-			);
+					58B5200D2A4A4A2BA243D1D1 /* DashboardViewModel.swift in Sources */,
+					58B5200E2A4A4A2BA243D1D1 /* LedgerView.swift in Sources */,
+					58B5200F2A4A4A2BA243D1D1 /* DashboardView.swift in Sources */,
+					58B5B00A2A4A4A2BA243D1D1 /* TransferView.swift in Sources */,
+					58B5600A2A4A4A2BA243D1D1 /* AuthViewModel.swift in Sources */,
+					58B5600B2A4A4A2BA243D1D1 /* SignInView.swift in Sources */,
+            );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
