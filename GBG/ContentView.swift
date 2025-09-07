@@ -87,8 +87,12 @@ private struct IconTabButton: View {
                 .frame(width: width, height: height) // button hit area
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color("SecondaryGold") : Color("NormalWhite"))
+                        .fill(isSelected ? Color("SecondaryGold") : Color.clear)
                         .opacity(0.7)
+                )
+                .overlay( // border
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isSelected ? Color.clear : Color.black, lineWidth: 1)
                 )
                 .scaleEffect(isPressed ? 0.9 : 1.0) // shrink when pressed
                 .animation(.spring(response: 0.15, dampingFraction: 0.7), value: isPressed)

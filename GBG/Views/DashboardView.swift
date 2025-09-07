@@ -87,7 +87,7 @@ struct DashboardView: View {
                 .padding(.bottom, 24)
             }
             .fullScreenCover(isPresented: $showTransferSheet) {
-                TransferSheet()
+                TransferView()
             }
         }
         .task { await viewModel.loadIfNeeded() }
@@ -114,69 +114,7 @@ private struct FloatingActionButton: View {
     }
 }
 
-private struct TransferSheet: View {
-    @Environment(\.dismiss) private var dismiss
-    @State private var amount: String = ""
-    @State private var isSubmitting = false
-
-    var body: some View {
-        ZStack {
-            Color("AppBackground").ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("PrimaryGold"))
-                            .padding(8)
-                            .background(Circle().fill(Color(.systemGray6)))
-                    }
-                    .buttonStyle(.plain)
-                    Spacer()
-                }
-
-                Text("Transfer Gold").font(.title2).bold()
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Amount (grams)").font(.subheadline).foregroundStyle(.secondary)
-                    TextField("e.g. 25.0", text: $amount)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(.roundedBorder)
-                }
-
-                Spacer()
-
-                Button {
-                    Task { await submit() }
-                } label: {
-                    if isSubmitting {
-                        ProgressView().tint(Color("AppBackground")).frame(maxWidth: .infinity)
-                    } else {
-                        Text("Continue").fontWeight(.semibold).frame(maxWidth: .infinity)
-                    }
-                }
-                .disabled(!isValid)
-                .frame(height: 48)
-                .background(isValid ? Color("PrimaryGold") : Color(.systemGray3))
-                .foregroundStyle(Color("AppBackground"))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            .padding(20)
-        }
-    }
-
-    private var isValid: Bool { (Double(amount) ?? 0) > 0 }
-
-    private func submit() async {
-        guard isValid else { return }
-        isSubmitting = true
-        defer { isSubmitting = false }
-        try? await Task.sleep(nanoseconds: 400_000_000)
-        dismiss()
-    }
-}
+// (Transfer content lives in TransferView.swift)
 
 #Preview {
     DashboardView(viewModel: DashboardViewModel(api: MockGlitterboxAPI(), userId: "user_1"))
