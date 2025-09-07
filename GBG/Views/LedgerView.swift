@@ -1,11 +1,7 @@
 import SwiftUI
 
 struct LedgerView: View {
-    @StateObject private var viewModel: LedgerViewModel
-
-    init(api: GlitterboxAPI) {
-        _viewModel = StateObject(wrappedValue: LedgerViewModel(api: api))
-    }
+    @ObservedObject var viewModel: LedgerViewModel
 
     var body: some View {
         Group {
@@ -72,7 +68,7 @@ struct LedgerView: View {
                 }
 
         }
-        .task { await viewModel.load() }
+        .task { await viewModel.loadIfNeeded() }
         .background(Color("AppBackground").ignoresSafeArea())
     }
 }
@@ -146,5 +142,5 @@ struct TransactionRow: View {
 }
 
 #Preview {
-    LedgerView(api: MockGlitterboxAPI())
+    LedgerView(viewModel: LedgerViewModel(api: MockGlitterboxAPI()))
 }

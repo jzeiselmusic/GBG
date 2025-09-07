@@ -1,13 +1,20 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let api = MockGlitterboxAPI()
     @StateObject private var auth = AuthViewModel()
     @State private var navigationSelected: Tab = .ledger
     private let iconHeight: CGFloat = 65
     private let iconWidth: CGFloat = 135
+    @StateObject private var ledgerVM: LedgerViewModel
+    @StateObject private var dashboardVM: DashboardViewModel
 
     enum Tab { case ledger, user }
+
+    init() {
+        let api = MockGlitterboxAPI()
+        _ledgerVM = StateObject(wrappedValue: LedgerViewModel(api: api))
+        _dashboardVM = StateObject(wrappedValue: DashboardViewModel(api: api, userId: ""))
+    }
 
     var body: some View {
         NavigationStack {
@@ -31,10 +38,10 @@ struct ContentView: View {
                     Group {
                         switch navigationSelected {
                             case .ledger:
-                                LedgerView(api: api)
+                                LedgerView(viewModel: ledgerVM)
                             case .user:
                                 if let userId = auth.userId, auth.isSignedIn {
-                                    DashboardView(api: api, userId: userId)
+                                    DashboardView(viewModel: dashboardVM)
                                 } else {
                                     SignInView()
                                         .environmentObject(auth)
@@ -48,6 +55,13 @@ struct ContentView: View {
         }
         .environmentObject(auth)
         .tint(Color("PrimaryGold"))
+        .onChange(of: auth.userId) { _, newValue in
+            if let id = newValue {
+                dashboardVM.updateUser(id: id)
+            } else {
+                dashboardVM.updateUser(id: "")
+            }
+        }
     }
 }
 

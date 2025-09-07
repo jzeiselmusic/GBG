@@ -1,11 +1,8 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @StateObject private var viewModel: DashboardViewModel
-
-    init(api: GlitterboxAPI, userId: String) {
-        _viewModel = StateObject(wrappedValue: DashboardViewModel(api: api, userId: userId))
-    }
+    @ObservedObject var viewModel: DashboardViewModel
+    @EnvironmentObject private var auth: AuthViewModel
 
     var body: some View {
         ZStack {
@@ -95,7 +92,7 @@ struct DashboardView: View {
                 .padding(.bottom, 24)
             }
         }
-        .task { await viewModel.load() }
+        .task { await viewModel.loadIfNeeded() }
         .background(Color("AppBackground").ignoresSafeArea())
     }
 }
@@ -120,5 +117,6 @@ private struct FloatingActionButton: View {
 }
 
 #Preview {
-    DashboardView(api: MockGlitterboxAPI(), userId: "user_1")
+    DashboardView(viewModel: DashboardViewModel(api: MockGlitterboxAPI(), userId: "user_1"))
+        .environmentObject(AuthViewModel())
 }

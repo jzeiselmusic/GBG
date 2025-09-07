@@ -7,6 +7,7 @@ final class LedgerViewModel: ObservableObject {
     @Published var universalLedger: [Transaction] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    private(set) var hasLoaded = false
 
     private let api: any GlitterboxAPI
 
@@ -23,8 +24,14 @@ final class LedgerViewModel: ObservableObject {
             async let ledger = api.fetchUniversalLedger()
             self.companySummary = try await summary
             self.universalLedger = try await ledger
+            self.hasLoaded = true
         } catch {
             self.errorMessage = error.localizedDescription
         }
+    }
+
+    func loadIfNeeded() async {
+        if hasLoaded { return }
+        await load()
     }
 }
