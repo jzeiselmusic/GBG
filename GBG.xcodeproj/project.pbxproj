@@ -23,6 +23,8 @@
 		58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A01A2A4A4A2BA243D1D1 /* AuthService.swift */; };
 		58B5A00B2A4A4A2BA243D1D1 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A02A2A4A4A2BA243D1D1 /* AuthSession.swift */; };
 		DB3A4B7B2E6E381B00FBBAB1 /* TransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5B01A2A4A4A2BA243D1D1 /* TransferView.swift */; };
+		DB3A4B7D2E6E3BFF00FBBAB1 /* BuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A4B7C2E6E3BFF00FBBAB1 /* BuyView.swift */; };
+		DB3A4B7F2E6E3C2100FBBAB1 /* SellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A4B7E2E6E3C2100FBBAB1 /* SellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		58B5A01A2A4A4A2BA243D1D1 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		58B5A02A2A4A4A2BA243D1D1 /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		58B5B01A2A4A4A2BA243D1D1 /* TransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
+		DB3A4B7C2E6E3BFF00FBBAB1 /* BuyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyView.swift; sourceTree = "<group>"; };
+		DB3A4B7E2E6E3C2100FBBAB1 /* SellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,8 @@
 		58B5202D2A4A4A2BA243D1D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DB3A4B7E2E6E3C2100FBBAB1 /* SellView.swift */,
+				DB3A4B7C2E6E3BFF00FBBAB1 /* BuyView.swift */,
 				58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */,
 				58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */,
 				58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */,
@@ -196,12 +202,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				58B51E7A2A4A4A2BA243D1D1 /* GBGApp.swift in Sources */,
+				DB3A4B7F2E6E3C2100FBBAB1 /* SellView.swift in Sources */,
 				58B51E7B2A4A4A2BA243D1D1 /* ContentView.swift in Sources */,
 				58B5200A2A4A4A2BA243D1D1 /* Transaction.swift in Sources */,
 				58B5800A2A4A4A2BA243D1D1 /* AppRoute.swift in Sources */,
 				58B5A00B2A4A4A2BA243D1D1 /* AuthSession.swift in Sources */,
 				58B5200B2A4A4A2BA243D1D1 /* GlitterboxAPI.swift in Sources */,
 				58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */,
+				DB3A4B7D2E6E3BFF00FBBAB1 /* BuyView.swift in Sources */,
 				58B5200C2A4A4A2BA243D1D1 /* LedgerViewModel.swift in Sources */,
 				58B5200D2A4A4A2BA243D1D1 /* DashboardViewModel.swift in Sources */,
 				58B5200E2A4A4A2BA243D1D1 /* LedgerView.swift in Sources */,

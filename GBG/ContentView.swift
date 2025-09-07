@@ -92,7 +92,7 @@ private struct IconTabButton: View {
                 )
                 .overlay( // border
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.clear : Color.black, lineWidth: 1)
+                        .stroke(isSelected ? Color.clear : Color.black, lineWidth: 0.5)
                 )
                 .scaleEffect(isPressed ? 0.9 : 1.0) // shrink when pressed
                 .animation(.spring(response: 0.15, dampingFraction: 0.7), value: isPressed)

@@ -4,9 +4,10 @@ struct DashboardView: View {
     @ObservedObject var viewModel: DashboardViewModel
     @EnvironmentObject private var auth: AuthViewModel
     @State private var showTransferSheet = false
+    @State private var showAllIcons = false
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             Group {
                 if viewModel.isLoading && viewModel.ledger.isEmpty {
                     ProgressView()
@@ -75,34 +76,78 @@ struct DashboardView: View {
                     .refreshable { await viewModel.load() }
                 }
             }
+            
+            if showAllIcons {
+                Color.black.opacity(0.0001) // invisible but hittable
+                    .ignoresSafeArea()
+                    .onTapGesture { withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) { showAllIcons = false } }
+                    .transition(.opacity)
+            }
 
-            VStack { // Floating action buttons
-                Spacer()
-                HStack(spacing: 20) {
-                    FloatingActionButton(systemImage: "cart.fill", label: "Buy") { showTransferSheet = true }
-                    FloatingActionButton(systemImage: "arrow.up", label: "Sell") { showTransferSheet = true }
-                    FloatingActionButton(systemImage: "arrow.left.arrow.right", label: "Transfer") { showTransferSheet = true }
+            VStack(spacing: 12) {
+                if showAllIcons {
+                    let items: [(Image, String, () -> Void)] = [
+                        (Image(systemName: "cart.fill"), "Buy", { showTransferSheet = true }),
+                        (Image(systemName: "arrow.up"), "Sell", { showTransferSheet = true }),
+                        (Image(systemName: "arrow.left.arrow.right"), "Transfer", { showTransferSheet = true })
+                    ]
+
+                    ForEach(Array(items.enumerated()), id: \.offset) { i, item in
+                        FloatingActionButton(icon: item.0, label: item.1, action: item.2)
+                            .transition(.move(edge: .bottom).combined(with: .opacity)) // <- vertical entrance
+                            .animation(.spring(response: 0.28, dampingFraction: 0.85).delay(Double(i) * 0.05),
+                                       value: showAllIcons) // slight stagger
+                    }
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 24)
+
+                // The main FAB that toggles the expansion
+                CollectiveActionButton(
+                    icon: Image("GoldIcon2"),
+                    label: "all"
+                ) {
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                        showAllIcons.toggle()
+                    }
+                }
             }
             .fullScreenCover(isPresented: $showTransferSheet) {
                 TransferView()
             }
+            .padding(.bottom, 24)
         }
         .task { await viewModel.loadIfNeeded() }
         .background(Color("AppBackground").ignoresSafeArea())
     }
 }
 
+private struct CollectiveActionButton: View {
+    let icon: Image
+    let label: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            icon
+                .resizable()
+                .scaledToFit()
+                .font(.system(size: 22, weight: .bold))
+                .frame(width: 85, height: 85)
+                .background(Circle().fill(Color.clear))
+                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+        }
+        .accessibilityLabel(Text(label))
+        .buttonStyle(.plain)
+    }
+}
+
 private struct FloatingActionButton: View {
-    let systemImage: String
+    let icon: Image
     let label: String
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Image(systemName: systemImage)
+            icon
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(Color("AppBackground"))
                 .frame(width: 56, height: 56)
