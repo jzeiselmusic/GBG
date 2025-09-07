@@ -32,6 +32,7 @@ struct LedgerView: View {
                                         .foregroundStyle(Color("PrimaryGold"))
                                     Spacer()
                                 }
+                                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                                 .listRowBackground(Color(.systemGray6))
                             }
                         }
@@ -39,12 +40,16 @@ struct LedgerView: View {
                         Section("Universal Ledger") {
                             ForEach(viewModel.universalLedger) { tx in
                                 TransactionRow(transaction: tx)
+                                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                    .listRowSeparator(Visibility.hidden)
+                                    .listRowBackground(Color.clear)
                             }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .listStyle(.plain)
+                    .listSectionSpacing(.compact)
+                    .contentMargins(.horizontal, 16, for: .scrollContent)
                     .scrollContentBackground(.hidden)
-                    .scrollIndicators(.hidden)
                     .background(Color("AppBackground"))
                     .refreshable { await viewModel.load() }
                 }

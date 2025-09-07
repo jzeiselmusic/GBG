@@ -38,18 +38,23 @@ struct DashboardView: View {
                                     }
                                     Spacer()
                                 }
+                                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                                 .listRowBackground(Color(.systemGray6))
                             }
                         }
                         Section("My Ledger") {
                             ForEach(viewModel.ledger) { tx in
                                 TransactionRow(transaction: tx)
+                                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                    .listRowSeparator(Visibility.hidden)
+                                    .listRowBackground(Color.clear)
                             }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .listStyle(.plain)
+                    .listSectionSpacing(.compact)
+                    .contentMargins(.horizontal, 16, for: .scrollContent)
                     .scrollContentBackground(.hidden)
-                    .scrollIndicators(.hidden)
                     .background(Color("AppBackground"))
                     .refreshable { await viewModel.load() }
                 }
@@ -88,7 +93,7 @@ private struct FloatingActionButton: View {
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(Color("AppBackground"))
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(Color("PrimaryGold")))
+                .background(Circle().fill(Color("PrimaryGold")).opacity(0.8))
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         }
         .accessibilityLabel(Text(label))

@@ -24,6 +24,7 @@ struct ContentView: View {
                             selected = .user
                         }
                     }
+                    .padding(.horizontal, 16)
                     .padding(.top, 24)
 
                     // Main content
@@ -42,7 +43,6 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .padding(.horizontal)
             }
             .toolbar(.hidden, for: .navigationBar)
         }

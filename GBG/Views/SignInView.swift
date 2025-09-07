@@ -44,6 +44,9 @@ struct SignInView: View {
                 }
             }
             .tint(Color("PrimaryGold"))
+            .scrollContentBackground(.hidden)
+            .contentMargins(.horizontal, 16, for: .scrollContent)
+            .background(Color("AppBackground"))
         }
 
     private func signIn() async {
