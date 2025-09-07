@@ -4,7 +4,7 @@ import Foundation
 final class DashboardViewModel: ObservableObject {
     @Published var summary: UserSummary?
     @Published var ledger: [Transaction] = []
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool = true
     @Published var errorMessage: String?
 
     private let api: any GlitterboxAPI

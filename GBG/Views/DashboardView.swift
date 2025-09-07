@@ -25,30 +25,48 @@ struct DashboardView: View {
                 } else {
                     List {
                         if let summary = viewModel.summary {
-                            Section("My Reserves") {
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(summary.displayName)
-                                            .font(.subheadline)
-                                            .foregroundStyle(.secondary)
-                                        Text(summary.reservesGrams.formattedGrams)
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(Color("PrimaryGold"))
-                                    }
-                                    Spacer()
+                            // Header-like row
+                            HStack {
+                                Text("My Reserves")
+                                    .font(.headline)
+                                    .foregroundColor(Color("NormalWhite"))
+                                Spacer()
+                            }
+                            .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 4, trailing: 16))
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+
+                            // Value row
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(summary.reservesGrams.formattedGrams)
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Color("PrimaryGold"))
                                 }
-                                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                                .listRowBackground(Color(.systemGray6))
+                                Spacer()
                             }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
                         }
-                        Section("My Ledger") {
-                            ForEach(viewModel.ledger) { tx in
-                                TransactionRow(transaction: tx)
-                                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                                    .listRowSeparator(Visibility.hidden)
-                                    .listRowBackground(Color.clear)
-                            }
+
+                        // Second header-like row
+                        HStack {
+                            Text("My Ledger")
+                                .font(.headline)
+                                .foregroundColor(Color("NormalWhite"))
+                            Spacer()
+                        }
+                        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 4, trailing: 16))
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+
+                        ForEach(viewModel.ledger) { tx in
+                            TransactionRow(transaction: tx)
+                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
                         }
                     }
                     .listStyle(.plain)

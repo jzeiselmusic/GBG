@@ -24,26 +24,43 @@ struct LedgerView: View {
                 } else {
                     List {
                         if let summary = viewModel.companySummary {
-                            Section("Total Company Reserves") {
-                                HStack {
-                                    Text(summary.totalReservesGrams.formattedGrams)
-                                        .font(.title3)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(Color("PrimaryGold"))
-                                    Spacer()
-                                }
-                                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                                .listRowBackground(Color(.systemGray6))
+                            HStack {
+                                Text("Total Company Reserves")
+                                    .font(.headline)
+                                    .foregroundColor(Color("NormalWhite"))
+                                Spacer()
                             }
+                            .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 4, trailing: 16))
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            
+                            HStack {
+                                Text(summary.totalReservesGrams.formattedGrams)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color("PrimaryGold"))
+                                Spacer()
+                            }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                            .listRowBackground(Color(Color("AppBackground")))
+                            .listRowSeparator(.hidden)
                         }
-
-                        Section("Universal Ledger") {
-                            ForEach(viewModel.universalLedger) { tx in
-                                TransactionRow(transaction: tx)
-                                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                                    .listRowSeparator(Visibility.hidden)
-                                    .listRowBackground(Color.clear)
-                            }
+                        
+                        HStack {
+                            Text("Universal Ledger")
+                                .font(.headline)
+                                .foregroundColor(Color("NormalWhite"))
+                            Spacer()
+                        }
+                        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 4, trailing: 16))
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        
+                        ForEach(viewModel.universalLedger) { tx in
+                            TransactionRow(transaction: tx)
+                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.clear)
                         }
                     }
                     .listStyle(.plain)
@@ -53,6 +70,7 @@ struct LedgerView: View {
                     .background(Color("AppBackground"))
                     .refreshable { await viewModel.load() }
                 }
+
         }
         .task { await viewModel.load() }
         .background(Color("AppBackground").ignoresSafeArea())
@@ -71,11 +89,13 @@ struct TransactionRow: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(primaryText)
-                    .font(.subheadline)
+                    .font(.custom("Courier", size: 16))
                     .fontWeight(.medium)
+                    .foregroundColor(Color("NormalWhite"))
                 Text(secondaryText)
-                    .font(.footnote)
+                    .font(.custom("Courier", size: 12))
                     .foregroundStyle(.secondary)
+                    .foregroundColor(Color("NormalWhite"))
             }
             Spacer()
 
@@ -96,20 +116,20 @@ struct TransactionRow: View {
 
     private var iconColor: Color {
         switch transaction.type {
-        case .buy: return .gray
-        case .sell: return .gray
-        case .transfer: return .gray
+        case .buy: return Color("NormalWhite")
+        case .sell: return Color("NormalWhite")
+        case .transfer: return Color("NormalWhite")
         }
     }
 
     private var primaryText: String {
         switch transaction.type {
         case .buy:
-            return "Buy → \(transaction.toUser ?? "")"
+            return "001 → \(transaction.toUser ?? "")"
         case .sell:
-            return "Sell ← \(transaction.fromUser ?? "")"
+            return "001 ← \(transaction.fromUser ?? "")"
         case .transfer:
-            return "Transfer: \(transaction.fromUser ?? "?") → \(transaction.toUser ?? "?")"
+            return "\(transaction.fromUser ?? "?") → \(transaction.toUser ?? "?")"
         }
     }
 

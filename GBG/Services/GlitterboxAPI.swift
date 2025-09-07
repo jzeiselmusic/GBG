@@ -9,9 +9,9 @@ protocol GlitterboxAPI: Sendable {
 
 actor MockGlitterboxAPI: GlitterboxAPI {
     private let users = [
-        (id: "user_1", name: "Alex"),
-        (id: "user_2", name: "Jordan"),
-        (id: "user_3", name: "Riley")
+        (id: "user_1", name: "001"),
+        (id: "user_2", name: "002"),
+        (id: "user_3", name: "003")
     ]
 
     func fetchCompanySummary() async throws -> CompanySummary {

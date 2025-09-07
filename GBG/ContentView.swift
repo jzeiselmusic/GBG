@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     private let api = MockGlitterboxAPI()
     @StateObject private var auth = AuthViewModel()
-    @State private var selected: Tab = .ledger
+    @State private var navigationSelected: Tab = .ledger
     private let iconHeight: CGFloat = 65
     private let iconWidth: CGFloat = 135
 
@@ -17,11 +17,11 @@ struct ContentView: View {
                 VStack(spacing: 12) {
                     // Top tab bar with icons only
                     HStack(spacing: 32) {
-                        IconTabButton(systemImage: "chart.bar.xaxis", isSelected: selected == .ledger, height: iconHeight, width: iconWidth) {
-                            selected = .ledger
+                        IconTabButton(systemImage: "chart.bar.xaxis", isSelected: navigationSelected == .ledger, height: iconHeight, width: iconWidth) {
+                            navigationSelected = .ledger
                         }
-                        IconTabButton(systemImage: "person.circle", isSelected: selected == .user, height: iconHeight, width: iconWidth) {
-                            selected = .user
+                        IconTabButton(systemImage: "person.circle", isSelected: navigationSelected == .user, height: iconHeight, width: iconWidth) {
+                            navigationSelected = .user
                         }
                     }
                     .padding(.horizontal, 16)
@@ -29,16 +29,16 @@ struct ContentView: View {
 
                     // Main content
                     Group {
-                        switch selected {
-                        case .ledger:
-                            LedgerView(api: api)
-                        case .user:
-                            if let userId = auth.userId, auth.isSignedIn {
-                                DashboardView(api: api, userId: userId)
-                            } else {
-                                SignInView()
-                                    .environmentObject(auth)
-                            }
+                        switch navigationSelected {
+                            case .ledger:
+                                LedgerView(api: api)
+                            case .user:
+                                if let userId = auth.userId, auth.isSignedIn {
+                                    DashboardView(api: api, userId: userId)
+                                } else {
+                                    SignInView()
+                                        .environmentObject(auth)
+                                }
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -67,11 +67,11 @@ private struct IconTabButton: View {
                     width: width * 0.5,   // icon scales to 50% of button size
                     height: height * 0.5
                 )
-                .foregroundStyle(isSelected ? Color("AppBackground") : Color("PrimaryGold"))
+                .foregroundStyle(isSelected ? Color("NormalWhite") : Color("PrimaryGold"))
                 .frame(width: width, height: height) // button hit area
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color("PrimaryGold") : Color(.systemGray6))
+                        .fill(isSelected ? Color("PrimaryGold") : Color("NormalWhite"))
                         .opacity(0.6)
                 )
         }

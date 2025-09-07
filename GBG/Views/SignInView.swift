@@ -10,14 +10,18 @@ struct SignInView: View {
 
     var body: some View {
         Form {
-            Section("Account") {
+            Section(header: Text("Sign In")
+                .foregroundColor(Color("NormalWhite"))
+                .font(.headline)) {
                 TextField("Email", text: $email)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
+                    .foregroundColor(.black)
                 SecureField("Password", text: $password)
                     .textContentType(.password)
+                    .foregroundColor(.black)
             }
 
                 if let error {
@@ -28,19 +32,20 @@ struct SignInView: View {
                 }
 
                 Section {
-                    Button {
-                        Task { await signIn() }
-                    } label: {
-                        if isWorking {
-                            ProgressView()
-                                .tint(Color("PrimaryGold"))
-                                .frame(maxWidth: .infinity)
-                        } else {
+                    if isWorking {
+                        ProgressView()
+                            .tint(Color("PrimaryGold"))
+                            .frame(maxWidth: .infinity)
+                            .background(.clear)
+                    } else {
+                        Button {
+                            Task { await signIn() }
+                        } label: {
                             Text("Sign In")
                                 .frame(maxWidth: .infinity)
                         }
+                        .disabled(isWorking || email.isEmpty || password.isEmpty)
                     }
-                    .disabled(isWorking || email.isEmpty || password.isEmpty)
                 }
             }
             .tint(Color("PrimaryGold"))
