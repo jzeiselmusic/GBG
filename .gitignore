@@ -1,0 +1,17 @@
+# Xcode & Swift
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+
+# Swift Package Manager (if used later)
+.swiftpm/
+Package.resolved
+
+# Fastlane (if used later)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
