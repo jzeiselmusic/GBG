@@ -33,10 +33,14 @@ struct SignInView: View {
 
                 Section {
                     if isWorking {
-                        ProgressView()
-                            .tint(Color("PrimaryGold"))
-                            .frame(maxWidth: .infinity)
-                            .background(.clear)
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                                .tint(Color("PrimaryGold"))
+                            Spacer()
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                     } else {
                         Button {
                             Task { await signIn() }
