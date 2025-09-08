@@ -9,6 +9,7 @@ struct ContentView: View {
     @StateObject private var dashboardVM: DashboardViewModel
     @State private var activeSheet: TransactionSheet?
     @State private var showAllIcons: Bool = false
+    @State private var confetti = 0 // celebrate
 
     enum Tab { case ledger, user }
     
@@ -94,13 +95,17 @@ struct ContentView: View {
                     }
                     .fullScreenCover(item: $activeSheet) { sheet in
                         switch sheet {
-                        case .buy:      BuyView()
-                        case .sell:     SellView()
-                        case .transfer: TransferView()
+                        case .buy:      TransactionView(transactionType: .buy, onCompletedTransaction: { confetti += 1 })
+                        case .sell:     TransactionView(transactionType: .sell, onCompletedTransaction: { confetti += 1 })
+                        case .transfer: TransactionView(transactionType: .transfer, onCompletedTransaction: { confetti += 1 })
                         }
                     }
                     .padding(.bottom, 24)
                 }
+                // celebrate. Trigger by confetti += 1
+                ConfettiOverlay(trigger: $confetti,
+                                colors: [.red, .green, .blue, .yellow, .orange, .purple, .pink],
+                                count: 500)
             }
             .toolbar(.hidden, for: .navigationBar)
         }

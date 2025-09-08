@@ -50,15 +50,10 @@ struct SignInView: View {
                     Button {
                         Task { await signIn() }
                     } label: {
-                        if isWorking {
-                            ProgressView().tint(Color("AppBackground"))
-                                .frame(maxWidth: .infinity)
-                        } else {
-                            Text("Sign in")
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color("AppBackground"))
-                                .frame(maxWidth: .infinity)
-                        }
+                        Text("Sign in")
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color("AppBackground"))
+                            .frame(maxWidth: .infinity)
                     }
                     .disabled(!isValid())
                     .frame(height: 48)
