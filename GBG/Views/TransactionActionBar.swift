@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct TransactionActionBar: View {
-    let action: () -> Void
+    let onBuy: () -> Void
+    let onSell: () -> Void
+    let onTransfer: () -> Void
 
     var body: some View {
         HStack(spacing: 20) {
-            CircleButton(systemImage: "cart.fill", action: action)
-            CircleButton(systemImage: "arrow.up", action: action)
-            CircleButton(systemImage: "arrow.left.arrow.right", action: action)
+            CircleButton(systemImage: "cart.fill", action: onBuy)
+            CircleButton(systemImage: "arrow.up", action: onSell)
+            CircleButton(systemImage: "arrow.left.arrow.right", action: onTransfer)
         }
         .padding(.horizontal, 24)
     }
@@ -35,9 +37,8 @@ private struct CircleButton: View {
         Color.gray.opacity(0.2).ignoresSafeArea()
         VStack {
             Spacer()
-            TransactionActionBar { }
+            TransactionActionBar(onBuy: {}, onSell: {}, onTransfer: {})
                 .padding(.bottom, 24)
         }
     }
 }
-

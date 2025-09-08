@@ -2,12 +2,12 @@ import SwiftUI
 
 struct TransferView: View {
     @Environment(\.dismiss) private var dismiss
+
+    enum InputMode: String, CaseIterable, Identifiable { case grams = "Grams", usd = "USD"; var id: String { rawValue } }
+
+    @State private var mode: InputMode = .grams
     @State private var amountText: String = ""
     @State private var isSubmitting = false
-    
-    init() {
-        print("showing transfer view")
-    }
 
     var body: some View {
         ZStack {
@@ -24,7 +24,6 @@ struct TransferView: View {
                             .padding(10)
                     }
                     .buttonStyle(.plain)
-
                     Spacer()
                 }
 
@@ -32,14 +31,25 @@ struct TransferView: View {
                     .font(.headline).bold()
                     .foregroundColor(Color("NormalWhite"))
 
+                // Input Mode
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Amount (grams)")
+                    Text("Input Mode").font(.subheadline).foregroundStyle(.secondary)
+                    Picker("Input Mode", selection: $mode) {
+                        ForEach(InputMode.allCases) { m in
+                            Text(m.rawValue).tag(m)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+
+                // Amount
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Amount (\(mode == .grams ? "grams" : "USD"))")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    TextField("e.g. 26.0", text: $amountText)
+                    TextField(mode == .grams ? "e.g. 10.5" : "e.g. 500.00", text: $amountText)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(.roundedBorder)
-                        .foregroundColor(.primary)
                 }
 
                 Spacer()
@@ -51,7 +61,7 @@ struct TransferView: View {
                         ProgressView().tint(Color("AppBackground"))
                             .frame(maxWidth: .infinity)
                     } else {
-                        Text("Continue")
+                        Text("Transfer")
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                     }
@@ -66,21 +76,15 @@ struct TransferView: View {
         }
     }
 
-    private var isValid: Bool {
-        guard let v = Double(amountText), v > 0 else { return false }
-        return true
-    }
+    private var isValid: Bool { (Double(amountText) ?? 0) > 0 }
 
     private func submit() async {
         guard isValid else { return }
         isSubmitting = true
         defer { isSubmitting = false }
-        try? await Task.sleep(nanoseconds: 400_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         dismiss()
     }
 }
 
-#Preview {
-    TransferView()
-}
-
+#Preview { TransferView() }
