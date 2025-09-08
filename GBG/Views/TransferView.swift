@@ -4,6 +4,10 @@ struct TransferView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var amountText: String = ""
     @State private var isSubmitting = false
+    
+    init() {
+        print("showing transfer view")
+    }
 
     var body: some View {
         ZStack {

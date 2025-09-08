@@ -3,8 +3,14 @@ import SwiftUI
 struct DashboardView: View {
     @ObservedObject var viewModel: DashboardViewModel
     @EnvironmentObject private var auth: AuthViewModel
-    @State private var showTransferSheet = false
-    @State private var showAllIcons = false
+    @State private var activeSheet: TransactionSheet?
+    @State private var showAllIcons: Bool = false
+    @Environment(\.scenePhase) private var scenePhase
+    
+    enum TransactionSheet: Identifiable {
+        case buy, sell, transfer
+        var id: Self { self }
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -87,22 +93,22 @@ struct DashboardView: View {
             VStack(spacing: 12) {
                 if showAllIcons {
                     let items: [(Image, String, () -> Void)] = [
-                        (Image(systemName: "cart.fill"), "Buy", { showTransferSheet = true }),
-                        (Image(systemName: "arrow.up"), "Sell", { showTransferSheet = true }),
-                        (Image(systemName: "arrow.left.arrow.right"), "Transfer", { showTransferSheet = true })
+                        (Image(systemName: "cart.fill"), "Buy", { activeSheet = .buy; showAllIcons = false }),
+                        (Image(systemName: "arrow.up"), "Sell", { activeSheet = .sell; showAllIcons = false }),
+                        (Image(systemName: "arrow.left.arrow.right"), "Transfer", { activeSheet = .transfer; showAllIcons = false })
                     ]
 
                     ForEach(Array(items.enumerated()), id: \.offset) { i, item in
                         FloatingActionButton(icon: item.0, label: item.1, action: item.2)
                             .transition(.move(edge: .bottom).combined(with: .opacity)) // <- vertical entrance
-                            .animation(.spring(response: 0.28, dampingFraction: 0.85).delay(Double(i) * 0.05),
+                            .animation(.spring(response: 0.28, dampingFraction: 0.85).delay(Double(i) * 0.25),
                                        value: showAllIcons) // slight stagger
                     }
                 }
 
                 // The main FAB that toggles the expansion
                 CollectiveActionButton(
-                    icon: Image("GoldIcon2"),
+                    icon: Image("GoldIcon"),
                     label: "all"
                 ) {
                     withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
@@ -110,8 +116,12 @@ struct DashboardView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showTransferSheet) {
-                TransferView()
+            .fullScreenCover(item: $activeSheet) { sheet in
+                switch sheet {
+                case .buy:      BuyView()
+                case .sell:     SellView()
+                case .transfer: TransferView()
+                }
             }
             .padding(.bottom, 24)
         }

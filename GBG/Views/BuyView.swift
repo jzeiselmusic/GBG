@@ -4,6 +4,10 @@ struct BuyView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var amountText: String = ""
     @State private var isSubmitting = false
+    
+    init() {
+        print("showing buy view")
+    }
 
     var body: some View {
         ZStack {
