@@ -1,5 +1,4 @@
 import SwiftUI
-import Twinkle
 
 struct ContentView: View {
     @StateObject private var auth = AuthViewModel()
@@ -97,8 +96,8 @@ struct ContentView: View {
                     .fullScreenCover(item: $activeSheet) { sheet in
                         switch sheet {
                         case .buy:      TransactionView(transactionType: .buy, onCompletedTransaction: { sparkleToken += 1 })
-                        case .sell:     TransactionView(transactionType: .sell, onCompletedTransaction: { })
-                        case .transfer: TransactionView(transactionType: .transfer, onCompletedTransaction: { })
+                        case .sell:     TransactionView(transactionType: .sell, onCompletedTransaction: { sparkleToken += 1 })
+                        case .transfer: TransactionView(transactionType: .transfer, onCompletedTransaction: { sparkleToken += 1 })
                         }
                     }
                     .padding(.bottom, 24)
@@ -117,116 +116,6 @@ struct ContentView: View {
             }
         }
     }
-}
-
-private struct IconTabButton: View {
-    let systemImage: String
-    var isSelected: Bool = false
-    var height: CGFloat
-    var width: CGFloat
-    let action: () -> Void
-    
-    @State private var isPressed = false
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .resizable() // make SF Symbol scalable
-                .scaledToFit()
-                .frame(
-                    width: width * 0.5,   // icon scales to 50% of button size
-                    height: height * 0.5
-                )
-                .foregroundStyle(isSelected ? Color("NormalWhite") : Color("SecondaryGold"))
-                .frame(width: width, height: height) // button hit area
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(isSelected ? Color("SecondaryGold") : Color.clear)
-                        .opacity(0.7)
-                )
-                .overlay( // border
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.clear : Color.black, lineWidth: 0.5)
-                )
-                .scaleEffect(isPressed ? 0.9 : 1.0) // shrink when pressed
-                .animation(.spring(response: 0.15, dampingFraction: 0.7), value: isPressed)
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { _ in isPressed = true }
-                        .onEnded { _ in isPressed = false }
-                )
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-private struct CollectiveActionButton: View {
-    let icon: Image
-    let label: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            icon
-                .resizable()
-                .scaledToFit()
-                .font(.system(size: 22, weight: .bold))
-                .frame(width: 85, height: 85)
-                .background(Circle().fill(Color.clear))
-                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-        }
-        .accessibilityLabel(Text(label))
-        .buttonStyle(.plain)
-    }
-}
-
-private struct FloatingActionButton: View {
-    let icon: Image
-    let label: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            icon
-                .font(.system(size: 22, weight: .bold))
-                .foregroundStyle(Color("AppBackground"))
-                .frame(width: 56, height: 56)
-                .background(Circle().fill(Color("SecondaryGold")).opacity(0.7))
-                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-        }
-        .accessibilityLabel(Text(label))
-        .buttonStyle(.plain)
-    }
-}
-
-struct TwinkleOverlay: UIViewRepresentable {
-    @Binding var fireToken: Int   // increment this to fire
-
-    func makeUIView(context: Context) -> UIView {
-        let v = UIView()
-        v.isUserInteractionEnabled = false
-        v.backgroundColor = .clear
-        v.clipsToBounds = false
-        return v
-    }
-
-    func updateUIView(_ v: UIView, context: Context) {
-        // Only fire when token changes AND we have a valid size
-        if context.coordinator.lastToken != fireToken, v.bounds.size != .zero {
-            context.coordinator.lastToken = fireToken
-            var config = Twinkle.Configuration()
-            config.minCount = 15
-            config.maxCount = 25
-            config.birthRate = 36
-            config.scale = 1.0
-            config.lifetime = 0.5
-            config.spin = 2.0
-            Twinkle.twinkle(v, configuration: config)
-        }
-    }
-
-    func makeCoordinator() -> Coordinator { Coordinator() }
-    final class Coordinator { var lastToken: Int = 0 }
 }
 
 #Preview {

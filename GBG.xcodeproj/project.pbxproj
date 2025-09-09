@@ -46,6 +46,10 @@
 		DB3A4B802E6F2ACA00FBBAB1 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DBEC31492E70D14900CB2111 /* Reusables */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Reusables; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		58B51E782A4A4A2BA243D1D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -121,6 +125,7 @@
 		58B5202D2A4A4A2BA243D1D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DBEC31492E70D14900CB2111 /* Reusables */,
 				58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */,
 				58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */,
 				58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */,
@@ -143,6 +148,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DBEC31492E70D14900CB2111 /* Reusables */,
 			);
 			name = GBG;
 			productName = GBG;
