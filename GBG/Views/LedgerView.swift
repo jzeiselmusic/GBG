@@ -2,74 +2,60 @@ import SwiftUI
 
 struct LedgerView: View {
     @ObservedObject var viewModel: LedgerViewModel
-
+    
     var body: some View {
-        Group {
-                if viewModel.isLoading && viewModel.universalLedger.isEmpty {
-                    ProgressView()
-                        .tint(Color("PrimaryGold"))
-                } else if let error = viewModel.errorMessage {
-                    VStack(spacing: 8) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .foregroundStyle(.orange)
-                        Text(error)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(.secondary)
-                    }
+        LazyVStack(spacing: 16) {
+            if viewModel.isLoading && viewModel.universalLedger.isEmpty {
+                ProgressView()
+                    .tint(Color("PrimaryGold"))
                     .padding()
-                } else {
-                    List {
-                        if let summary = viewModel.companySummary {
-                            HStack {
-                                Text("Total Company Reserves")
-                                    .font(.headline)
-                                    .foregroundColor(Color("NormalWhite"))
-                                Spacer()
-                            }
-                            .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 4, trailing: 16))
-                            .listRowBackground(Color.clear)
-                            .listRowSeparator(.hidden)
-                            
-                            HStack {
-                                Text(summary.totalReservesGrams.formattedGrams)
-                                    .font(.title3)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(Color("PrimaryGold"))
-                                Spacer()
-                            }
-                            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                            .listRowBackground(Color(Color("AppBackground")))
-                            .listRowSeparator(.hidden)
-                        }
-                        
+            } else if let error = viewModel.errorMessage {
+                VStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundStyle(.orange)
+                    Text(error)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.secondary)
+                }
+                .padding()
+            } else {
+                if let summary = viewModel.companySummary {
+                    VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("Universal Ledger")
+                            Text("Total Company Reserves")
                                 .font(.headline)
                                 .foregroundColor(Color("NormalWhite"))
                             Spacer()
                         }
-                        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 4, trailing: 16))
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        
-                        ForEach(viewModel.universalLedger) { tx in
-                            TransactionRow(transaction: tx)
-                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(Color.clear)
+                        HStack {
+                            Text(summary.totalReservesGrams.formattedGrams)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color("PrimaryGold"))
+                            Spacer()
                         }
                     }
-                    .listStyle(.plain)
-                    .listSectionSpacing(.compact)
-                    .contentMargins(.horizontal, 16, for: .scrollContent)
-                    .scrollContentBackground(.hidden)
-                    .background(Color("AppBackground"))
-                    .refreshable { await viewModel.load() }
+                    .padding(.vertical, 8)
                 }
-
+                
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("Universal Ledger")
+                            .font(.headline)
+                            .foregroundColor(Color("NormalWhite"))
+                        Spacer()
+                    }
+                    
+                    LazyVStack(spacing: 8) {
+                        ForEach(viewModel.universalLedger) { tx in
+                            TransactionRow(transaction: tx)
+                        }
+                    }
+                }
+            }
         }
         .task { await viewModel.loadIfNeeded() }
-        .background(Color("AppBackground").ignoresSafeArea())
+        .refreshable { await viewModel.load() }
     }
 }
 

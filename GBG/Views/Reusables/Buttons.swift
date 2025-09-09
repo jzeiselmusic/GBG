@@ -11,6 +11,7 @@ struct IconTabButton: View {
     var isSelected: Bool = false
     var height: CGFloat
     var width: CGFloat
+    var isCompact: Bool = false
     let action: () -> Void
     
     @State private var isPressed = false
@@ -18,24 +19,27 @@ struct IconTabButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .resizable() // make SF Symbol scalable
+                .resizable()
                 .scaledToFit()
                 .frame(
-                    width: width * 0.5,   // icon scales to 50% of button size
-                    height: height * 0.5
+                    width: width * (isCompact ? 0.6 : 0.5),
+                    height: height * (isCompact ? 0.6 : 0.5)
                 )
                 .foregroundStyle(isSelected ? Color("NormalWhite") : Color("SecondaryGold"))
-                .frame(width: width, height: height) // button hit area
+                .frame(width: width, height: height)
                 .background(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: isCompact ? 8 : 12)
                         .fill(isSelected ? Color("SecondaryGold") : Color.clear)
-                        .opacity(0.7)
+                        .opacity(isCompact ? 0.5 : 0.7)
                 )
-                .overlay( // border
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.clear : Color.black, lineWidth: 0.5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: isCompact ? 8 : 12)
+                        .stroke(
+                            isSelected ? Color.clear : (isCompact ? Color.clear : Color.black), 
+                            lineWidth: isCompact ? 0 : 0.5
+                        )
                 )
-                .scaleEffect(isPressed ? 0.9 : 1.0) // shrink when pressed
+                .scaleEffect(isPressed ? 0.9 : 1.0)
                 .animation(.spring(response: 0.15, dampingFraction: 0.7), value: isPressed)
                 .simultaneousGesture(
                     DragGesture(minimumDistance: 0)
