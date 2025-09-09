@@ -1,12 +1,5 @@
 import SwiftUI
 
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static let defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-
 struct ContentView: View {
     @StateObject private var auth = AuthViewModel()
     @State private var navigationSelected: Tab = .ledger
@@ -17,7 +10,6 @@ struct ContentView: View {
     @State private var activeSheet: TransactionSheet?
     @State private var showAllIcons: Bool = false
     @State private var sparkleToken = 0
-    @State private var scrollOffset: CGFloat = 0
 
     enum Tab { case ledger, user }
     
@@ -39,7 +31,7 @@ struct ContentView: View {
 
                 VStack(spacing: 0) {
                     // Sticky tab navigation
-                    let isCompact = scrollOffset > 50
+                    let isCompact = false
                     let tabHeight: CGFloat = isCompact ? 40 : iconHeight
                     let tabWidth: CGFloat = isCompact ? 70 : iconWidth
                     
@@ -91,20 +83,6 @@ struct ContentView: View {
                                 }
                             }
                             .padding(.horizontal, 16)
-                        }
-                        .background(
-                            GeometryReader { proxy in
-                                Color.clear.preference(
-                                    key: ScrollOffsetPreferenceKey.self,
-                                    value: proxy.frame(in: .named("scrollView")).minY
-                                )
-                            }
-                        )
-                    }
-                    .coordinateSpace(name: "scrollView")
-                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                        DispatchQueue.main.async {
-                            scrollOffset = -value
                         }
                     }
                 }
