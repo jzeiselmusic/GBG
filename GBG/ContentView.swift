@@ -1,4 +1,5 @@
 import SwiftUI
+import Twinkle
 
 struct ContentView: View {
     @StateObject private var auth = AuthViewModel()
@@ -9,7 +10,7 @@ struct ContentView: View {
     @StateObject private var dashboardVM: DashboardViewModel
     @State private var activeSheet: TransactionSheet?
     @State private var showAllIcons: Bool = false
-    @State private var confetti = 0 // celebrate
+    @State private var sparkleToken = 0
 
     enum Tab { case ledger, user }
     
@@ -95,20 +96,17 @@ struct ContentView: View {
                     }
                     .fullScreenCover(item: $activeSheet) { sheet in
                         switch sheet {
-                        case .buy:      TransactionView(transactionType: .buy, onCompletedTransaction: { confetti += 1 })
-                        case .sell:     TransactionView(transactionType: .sell, onCompletedTransaction: { confetti += 1 })
-                        case .transfer: TransactionView(transactionType: .transfer, onCompletedTransaction: { confetti += 1 })
+                        case .buy:      TransactionView(transactionType: .buy, onCompletedTransaction: { sparkleToken += 1 })
+                        case .sell:     TransactionView(transactionType: .sell, onCompletedTransaction: { })
+                        case .transfer: TransactionView(transactionType: .transfer, onCompletedTransaction: { })
                         }
                     }
                     .padding(.bottom, 24)
                 }
-                // celebrate. Trigger by confetti += 1
-                ConfettiOverlay(trigger: $confetti,
-                                colors: [.red, .green, .blue, .yellow, .orange, .purple, .pink],
-                                count: 500)
             }
             .toolbar(.hidden, for: .navigationBar)
         }
+        .overlay(TwinkleOverlay(fireToken: $sparkleToken))
         .environmentObject(auth)
         .tint(Color("PrimaryGold"))
         .onChange(of: auth.userId) { _, newValue in
@@ -199,6 +197,36 @@ private struct FloatingActionButton: View {
         .accessibilityLabel(Text(label))
         .buttonStyle(.plain)
     }
+}
+
+struct TwinkleOverlay: UIViewRepresentable {
+    @Binding var fireToken: Int   // increment this to fire
+
+    func makeUIView(context: Context) -> UIView {
+        let v = UIView()
+        v.isUserInteractionEnabled = false
+        v.backgroundColor = .clear
+        v.clipsToBounds = false
+        return v
+    }
+
+    func updateUIView(_ v: UIView, context: Context) {
+        // Only fire when token changes AND we have a valid size
+        if context.coordinator.lastToken != fireToken, v.bounds.size != .zero {
+            context.coordinator.lastToken = fireToken
+            var config = Twinkle.Configuration()
+            config.minCount = 15
+            config.maxCount = 25
+            config.birthRate = 36
+            config.scale = 1.0
+            config.lifetime = 0.5
+            config.spin = 2.0
+            Twinkle.twinkle(v, configuration: config)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+    final class Coordinator { var lastToken: Int = 0 }
 }
 
 #Preview {

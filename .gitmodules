@@ -1,0 +1,4 @@
+[submodule "Twinkle"]
+	path = Twinkle
+	url = https://github.com/jzeiselmusic/Twinkle.git
+	branch = 0.6.0-patch-01

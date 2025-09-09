@@ -23,7 +23,7 @@
 		58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A01A2A4A4A2BA243D1D1 /* AuthService.swift */; };
 		58B5A00B2A4A4A2BA243D1D1 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A02A2A4A4A2BA243D1D1 /* AuthSession.swift */; };
 		DB3A4B812E6F2ACD00FBBAB1 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A4B802E6F2ACA00FBBAB1 /* TransactionView.swift */; };
-		DB3A4B832E6F432D00FBBAB1 /* ConfettiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A4B822E6F432900FBBAB1 /* ConfettiEngine.swift */; };
+		DBEC31482E70D06D00CB2111 /* Twinkle in Frameworks */ = {isa = PBXBuildFile; productRef = DBEC31472E70D06D00CB2111 /* Twinkle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +44,6 @@
 		58B5A01A2A4A4A2BA243D1D1 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		58B5A02A2A4A4A2BA243D1D1 /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		DB3A4B802E6F2ACA00FBBAB1 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
-		DB3A4B822E6F432900FBBAB1 /* ConfettiEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBEC31482E70D06D00CB2111 /* Twinkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,6 @@
 		58B5202D2A4A4A2BA243D1D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DB3A4B822E6F432900FBBAB1 /* ConfettiEngine.swift */,
 				58B5201E2A4A4A2BA243D1D1 /* LedgerView.swift */,
 				58B5201F2A4A4A2BA243D1D1 /* DashboardView.swift */,
 				58B5601B2A4A4A2BA243D1D1 /* SignInView.swift */,
@@ -172,6 +171,9 @@
 				en,
 			);
 			mainGroup = 58B51E742A4A4A2BA243D1D1;
+			packageReferences = (
+				DBEC31462E70D06D00CB2111 /* XCLocalSwiftPackageReference "Twinkle" */,
+			);
 			productRefGroup = 58B51E752A4A4A2BA243D1D1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -203,7 +205,6 @@
 				58B5200A2A4A4A2BA243D1D1 /* Transaction.swift in Sources */,
 				58B5800A2A4A4A2BA243D1D1 /* AppRoute.swift in Sources */,
 				58B5A00B2A4A4A2BA243D1D1 /* AuthSession.swift in Sources */,
-				DB3A4B832E6F432D00FBBAB1 /* ConfettiEngine.swift in Sources */,
 				58B5200B2A4A4A2BA243D1D1 /* GlitterboxAPI.swift in Sources */,
 				58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */,
 				58B5200C2A4A4A2BA243D1D1 /* LedgerViewModel.swift in Sources */,
@@ -358,6 +359,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		DBEC31462E70D06D00CB2111 /* XCLocalSwiftPackageReference "Twinkle" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Twinkle;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DBEC31472E70D06D00CB2111 /* Twinkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Twinkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 58B51E732A4A4A2BA243D1D1 /* Project object */;
 }
