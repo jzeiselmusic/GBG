@@ -2,3 +2,6 @@
 	path = Twinkle
 	url = https://github.com/jzeiselmusic/Twinkle.git
 	branch = 0.6.0-patch-01
+[submodule "RHLinePlot"]
+	path = RHLinePlot
+	url = https://github.com/jzeiselmusic/RHLinePlot.git

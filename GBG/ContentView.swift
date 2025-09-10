@@ -30,61 +30,48 @@ struct ContentView: View {
                 Color("AppBackground").ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    // Sticky tab navigation
-                    let isCompact = false
-                    let tabHeight: CGFloat = isCompact ? 40 : iconHeight
-                    let tabWidth: CGFloat = isCompact ? 70 : iconWidth
-                    
-                    HStack(spacing: isCompact ? 16 : 32) {
+                    HStack(spacing: 32) {
                         IconTabButton(
                             systemImage: "chart.bar.xaxis", 
                             isSelected: navigationSelected == .ledger, 
-                            height: tabHeight, 
-                            width: tabWidth,
-                            isCompact: isCompact
+                            height: iconHeight,
+                            width: iconWidth
                         ) {
                             navigationSelected = .ledger
                         }
                         IconTabButton(
                             systemImage: "person.circle", 
                             isSelected: navigationSelected == .user, 
-                            height: tabHeight, 
-                            width: tabWidth,
-                            isCompact: isCompact
+                            height: iconHeight,
+                            width: iconWidth
                         ) {
                             navigationSelected = .user
                         }
                     }
                     .padding(.horizontal, 16)
-                    .padding(.top, isCompact ? 8 : 24)
-                    .padding(.bottom, isCompact ? 8 : 16)
+                    .padding(.top, 24)
+                    .padding(.bottom, 16)
                     .background(Color("AppBackground"))
-                    .animation(.easeInOut(duration: 0.3), value: isCompact)
+                    .animation(.easeInOut(duration: 0.3), value: true)
                     
                     // Scrollable content
                     ScrollView {
-                        LazyVStack(spacing: 20) {
-                            // Spacer to account for removed tab buttons
-                            Rectangle()
-                                .fill(Color.clear)
-                                .frame(height: 0)
-                            
-                            // Dynamic content based on selected tab
-                            Group {
-                                switch navigationSelected {
-                                    case .ledger:
-                                        LedgerView(viewModel: ledgerVM)
-                                    case .user:
-                                        if let userId = auth.userId, auth.isSignedIn {
-                                            DashboardView(viewModel: dashboardVM)
-                                        } else {
-                                            SignInView().environmentObject(auth)
-                                        }
-                                }
+                        // Dynamic content based on selected tab
+                        Group {
+                            switch navigationSelected {
+                                case .ledger:
+                                    LedgerView(viewModel: ledgerVM)
+                                case .user:
+                                    if let userId = auth.userId, auth.isSignedIn {
+                                        DashboardView(viewModel: dashboardVM)
+                                    } else {
+                                        SignInView().environmentObject(auth)
+                                    }
                             }
-                            .padding(.horizontal, 16)
                         }
+                        .padding(.horizontal, 16)
                     }
+                    .refreshable { }
                 }
                 
                 if (auth.isSignedIn) {

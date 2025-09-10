@@ -23,6 +23,7 @@
 		58B5A00A2A4A4A2BA243D1D1 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A01A2A4A4A2BA243D1D1 /* AuthService.swift */; };
 		58B5A00B2A4A4A2BA243D1D1 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5A02A2A4A4A2BA243D1D1 /* AuthSession.swift */; };
 		DB3A4B812E6F2ACD00FBBAB1 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A4B802E6F2ACA00FBBAB1 /* TransactionView.swift */; };
+		DB415AA42E71C44200D08E6F /* RHLinePlot in Frameworks */ = {isa = PBXBuildFile; productRef = DB415AA32E71C44200D08E6F /* RHLinePlot */; };
 		DBEC31482E70D06D00CB2111 /* Twinkle in Frameworks */ = {isa = PBXBuildFile; productRef = DBEC31472E70D06D00CB2111 /* Twinkle */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBEC31482E70D06D00CB2111 /* Twinkle in Frameworks */,
+				DB415AA42E71C44200D08E6F /* RHLinePlot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +183,7 @@
 			mainGroup = 58B51E742A4A4A2BA243D1D1;
 			packageReferences = (
 				DBEC31462E70D06D00CB2111 /* XCLocalSwiftPackageReference "Twinkle" */,
+				DB415AA22E71C44200D08E6F /* XCLocalSwiftPackageReference "RHLinePlot" */,
 			);
 			productRefGroup = 58B51E752A4A4A2BA243D1D1 /* Products */;
 			projectDirPath = "";
@@ -369,6 +372,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		DB415AA22E71C44200D08E6F /* XCLocalSwiftPackageReference "RHLinePlot" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = RHLinePlot;
+		};
 		DBEC31462E70D06D00CB2111 /* XCLocalSwiftPackageReference "Twinkle" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Twinkle;
@@ -376,6 +383,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DB415AA32E71C44200D08E6F /* RHLinePlot */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RHLinePlot;
+		};
 		DBEC31472E70D06D00CB2111 /* Twinkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Twinkle;
