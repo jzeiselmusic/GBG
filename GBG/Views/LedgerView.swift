@@ -1,4 +1,5 @@
 import SwiftUI
+import RHLinePlot
 
 struct LedgerView: View {
     @ObservedObject var viewModel: LedgerViewModel
@@ -37,6 +38,11 @@ struct LedgerView: View {
                     }
                     .padding(.vertical, 8)
                 }
+                
+                GBPlot(
+                    demoValues: [1.0, 1.12, 1.08, 1.25, 1.18, 1.32, 1.28, 1.45, 1.4, 1.6],
+                    demoSegments: [0, 4, 7]
+                )
                 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {

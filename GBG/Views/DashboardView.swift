@@ -38,6 +38,11 @@ struct DashboardView: View {
                     .padding(.vertical, 8)
                 }
                 
+                GBPlot(
+                    demoValues: [5.0, 5.24, 4.5, 6.23, 7.8, 8.5, 3.43, 10.0],
+                    demoSegments: [0, 2, 4, 6]
+                )
+                
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("My Ledger")
