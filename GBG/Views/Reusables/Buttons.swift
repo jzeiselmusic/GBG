@@ -56,15 +56,32 @@ struct CollectiveActionButton: View {
     let label: String
     let action: () -> Void
     
+    @State private var flipped = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        Button(action: action) {
-            icon
-                .resizable()
-                .scaledToFit()
-                .font(.system(size: 22, weight: .bold))
-                .frame(width: 85, height: 85)
-                .background(Circle().fill(Color.clear))
-                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+        Button {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
+                flipped.toggle()
+            }
+            action()
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(Color("NormalWhite"))
+                    .overlay(
+                        Circle().stroke(Color.black, lineWidth: 2)
+                    )
+
+                // Icon
+                icon
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 65, height: 65)     // icon size
+                    .rotationEffect(.degrees(flipped ? 180 : 0))
+            }
+            .frame(width: 85, height: 85)              // circle size
+            .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         }
         .accessibilityLabel(Text(label))
         .buttonStyle(.plain)
@@ -82,7 +99,7 @@ struct FloatingActionButton: View {
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(Color("AppBackground"))
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(Color("SecondaryGold")).opacity(0.7))
+                .background(Circle().fill(Color("NormalWhite")).opacity(0.9))
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         }
         .accessibilityLabel(Text(label))
