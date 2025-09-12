@@ -16,7 +16,10 @@ actor MockGlitterboxAPI: GlitterboxAPI {
 
     func fetchCompanySummary() async throws -> CompanySummary {
         try await Task.sleep(nanoseconds: 150_000_000)
-        return CompanySummary(totalReservesGrams: 125_000.75)
+        return CompanySummary(
+            totalReservesGrams: 1_000.75,
+            spotPriceDollarsPerGram: 3_660.6
+        )
     }
 
     func fetchUniversalLedger() async throws -> [Transaction] {
@@ -37,7 +40,7 @@ actor MockGlitterboxAPI: GlitterboxAPI {
     func fetchUserSummary(userId: String) async throws -> UserSummary {
         try await Task.sleep(nanoseconds: 120_000_000)
         let name = users.first(where: { $0.id == userId })?.name ?? "User"
-        let reserves = userId.hashValue.magnitude % 10_000
+        let reserves = 110.0
         return UserSummary(userId: userId, displayName: name, reservesGrams: Double(reserves))
     }
 

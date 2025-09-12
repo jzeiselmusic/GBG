@@ -3,6 +3,7 @@ import Foundation
 @MainActor
 final class DashboardViewModel: ObservableObject {
     @Published var summary: UserSummary?
+    @Published var companySummary: CompanySummary?
     @Published var ledger: [Transaction] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -24,8 +25,10 @@ final class DashboardViewModel: ObservableObject {
             let api = self.api
             let uid = self.userId
             async let summary = api.fetchUserSummary(userId: uid)
+            async let totalSummary = api.fetchCompanySummary()
             async let ledger = api.fetchUserLedger(userId: uid)
             self.summary = try await summary
+            self.companySummary = try await totalSummary
             self.ledger = try await ledger
             self.hasLoaded = true
         } catch {

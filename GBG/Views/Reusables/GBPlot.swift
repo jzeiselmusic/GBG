@@ -18,8 +18,8 @@ struct GBPlot: View {
             showGlowingIndicator: true,
             lineSegmentStartingIndices: demoSegments,
             didSelectValueAtIndex: { idx in
-                // e.g. hook into analytics or show a toast
-                // print("Selected index \(idx): \(demoValues[idx])")
+                //
+                //
             },
             customLatestValueIndicator: { EmptyView() },
             valueStickLabel: { value in
@@ -33,11 +33,10 @@ struct GBPlot: View {
         )
         .frame(height: 160)
         .foregroundColor(Color("SecondaryGold")) // sets line color
-        .background(Color("AppBackground"))
         .environment(\.rhLinePlotConfig,
                      RHLinePlotConfig.default.custom { c in
-                         c.plotLineWidth = 2
-                         c.valueStickColor = .gray
+                         c.plotLineWidth = 1.5
+                         c.valueStickColor = Color("NormalWhite")
                          c.valueStickTopPadding = 16
                          c.valueStickBottomPadding = 16
                      })

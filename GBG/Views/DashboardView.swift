@@ -22,7 +22,7 @@ struct DashboardView: View {
                 if let summary = viewModel.summary {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("My Reserves")
+                            Text("Your Gold Balance")
                                 .font(.headline)
                                 .foregroundColor(Color("NormalWhite"))
                             Spacer()
@@ -36,6 +36,25 @@ struct DashboardView: View {
                         }
                     }
                     .padding(.vertical, 8)
+                    
+                    if let companySummary = viewModel.companySummary {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("Current Market Value")
+                                    .font(.headline)
+                                    .foregroundColor(Color("NormalWhite"))
+                                Spacer()
+                            }
+                            HStack {
+                                Text("\((companySummary.spotPriceDollarsPerGram * summary.reservesGrams).formattedDollar)")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color("PrimaryGold"))
+                                Spacer()
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
                 }
                 
                 GBPlot(

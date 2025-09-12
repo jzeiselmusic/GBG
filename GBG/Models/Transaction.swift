@@ -28,6 +28,7 @@ struct Transaction: Identifiable, Codable, Hashable {
 
 struct CompanySummary: Codable, Hashable {
     let totalReservesGrams: Double
+    let spotPriceDollarsPerGram: Double
 }
 
 struct UserSummary: Codable, Hashable {
@@ -42,6 +43,20 @@ extension Double {
         nf.numberStyle = .decimal
         nf.maximumFractionDigits = 2
         return (nf.string(from: NSNumber(value: self)) ?? "\(self)") + " g"
+    }
+    
+    var formattedDollarPerGram: String {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.maximumFractionDigits = 2
+        return "$" + (nf.string(from: NSNumber(value: self)) ?? "\(self)") + " /g"
+    }
+    
+    var formattedDollar: String {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.maximumFractionDigits = 2
+        return "$" + (nf.string(from: NSNumber(value: self)) ?? "\(self)")
     }
 }
 

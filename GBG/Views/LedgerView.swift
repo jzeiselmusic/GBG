@@ -3,6 +3,7 @@ import RHLinePlot
 
 struct LedgerView: View {
     @ObservedObject var viewModel: LedgerViewModel
+    @State var spotPrice: CGFloat? = nil
     
     var body: some View {
         LazyVStack(spacing: 16) {
@@ -37,11 +38,28 @@ struct LedgerView: View {
                         }
                     }
                     .padding(.vertical, 8)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Spot Price")
+                                .font(.headline)
+                                .foregroundColor(Color("NormalWhite"))
+                            Spacer()
+                        }
+                        HStack {
+                            Text(summary.spotPriceDollarsPerGram.formattedDollarPerGram)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color("PrimaryGold"))
+                            Spacer()
+                        }
+                    }
+                    .padding(.vertical, 8)
                 }
                 
                 GBPlot(
-                    demoValues: [1.0, 1.12, 1.08, 1.25, 1.18, 1.32, 1.28, 1.45, 1.4, 1.6],
-                    demoSegments: [0, 4, 7]
+                    demoValues: [3650.5, 3651.2, 3651.5, 3652.3, 3652.6, 3651.7, 3659.3, 3660.4, 3660.3, 3660.6],
+                    demoSegments: [0, 4, 7],
                 )
                 
                 VStack(alignment: .leading, spacing: 12) {
