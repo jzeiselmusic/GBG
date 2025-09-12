@@ -54,16 +54,13 @@ struct IconTabButton: View {
 struct CollectiveActionButton: View {
     let icon: Image
     let label: String
+    let flipped: Bool
     let action: () -> Void
     
-    @State private var flipped = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Button {
-            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
-                flipped.toggle()
-            }
             action()
         } label: {
             ZStack {

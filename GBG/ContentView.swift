@@ -8,6 +8,7 @@ struct ContentView: View {
     @StateObject private var ledgerVM: LedgerViewModel
     @StateObject private var dashboardVM: DashboardViewModel
     @State private var activeSheet: TransactionSheet?
+    @State private var buttonFlipped: Bool = false
     @State private var showAllIcons: Bool = false
     @State private var sparkleToken = 0
 
@@ -22,6 +23,24 @@ struct ContentView: View {
         let api = MockGlitterboxAPI()
         _ledgerVM = StateObject(wrappedValue: LedgerViewModel(api: api))
         _dashboardVM = StateObject(wrappedValue: DashboardViewModel(api: api, userId: ""))
+    }
+    
+    private func toggleButton() {
+        if (showAllIcons) {
+            withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                showAllIcons = false
+            }
+            withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
+                buttonFlipped = false
+            }
+        } else {
+            withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                showAllIcons = true
+            }
+            withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
+                buttonFlipped = true
+            }
+        }
     }
 
     var body: some View {
@@ -78,16 +97,25 @@ struct ContentView: View {
                     if showAllIcons {
                         Color.black.opacity(0.0001) // invisible but hittable
                             .ignoresSafeArea()
-                            .onTapGesture { withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) { showAllIcons = false } }
+                            .onTapGesture { toggleButton() }
                             .transition(.opacity)
                     }
                     
                     VStack(spacing: 12) {
                         if showAllIcons {
                             let items: [(Image, String, () -> Void)] = [
-                                (Image(systemName: "cart.fill"), "Buy", { activeSheet = .buy; showAllIcons = false }),
-                                (Image(systemName: "arrow.up"), "Sell", { activeSheet = .sell; showAllIcons = false }),
-                                (Image(systemName: "arrow.left.arrow.right"), "Transfer", { activeSheet = .transfer; showAllIcons = false })
+                                (Image(systemName: "cart.fill"), "Buy", {
+                                    activeSheet = .buy
+                                    toggleButton()
+                                }),
+                                (Image(systemName: "arrow.up"), "Sell", {
+                                    activeSheet = .sell
+                                    toggleButton()
+                                }),
+                                (Image(systemName: "arrow.left.arrow.right"), "Transfer", {
+                                    activeSheet = .transfer
+                                    toggleButton()
+                                })
                             ]
 
                             ForEach(Array(items.enumerated()), id: \.offset) { i, item in
@@ -101,12 +129,9 @@ struct ContentView: View {
                         // The main FAB that toggles the expansion
                         CollectiveActionButton(
                             icon: Image("GoldIcon"),
-                            label: "all"
-                        ) {
-                            withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
-                                showAllIcons.toggle()
-                            }
-                        }
+                            label: "all",
+                            flipped: buttonFlipped
+                        ) { toggleButton() }
                     }
                     .fullScreenCover(item: $activeSheet) { sheet in
                         switch sheet {
